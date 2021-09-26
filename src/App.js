@@ -11,6 +11,7 @@ import Login from './components/Login';
 import Error from './pages/404';
 import CoinInfo from './pages/coin-info';
 import Contact from './pages/contact';
+import CourseDetail from './pages/course-detail';
 import Faq from './pages/faq';
 import Home from './pages/home';
 import Course from './pages/home/components/Course';
@@ -35,13 +36,14 @@ function App() {
             <Switch>
                 <Route path="/coin-info" component={CoinInfo}/>
                 <Route path="/contact" component={Contact}/>
-                <Route path="/course" component={Course}/>
                 <Route path="/team" component={Team}/>
                 <Route path="/faq" component={Faq}/>
                 <Route path="/payment" component={Payment}/>
                 <Route path="/profile" component={Profile}/>
                 <Route path="/project" component={Project}/>
                 <Route path="/register" component={Register}/>
+                <Route path="/course/:slug" component={CourseDetail}/>
+                <Route path="/course" component={Course}/>
                 <Route exact path="/" component={Home}/>
                 <Route component={Error}/>
             </Switch>

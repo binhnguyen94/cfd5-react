@@ -1,14 +1,23 @@
 import React from 'react'
-import {Link, NavLink} from 'react-router-dom'
+import {Link, NavLink, useHistory} from 'react-router-dom'
 
 export default function Header(){
-
+    let history = useHistory()
+    
     function openMenu(){
         document.body.classList.toggle('menu-is-show')
     }
-    function closeMenu(){
+
+    function closeMenu(e){
         document.body.classList.remove('menu-is-show')
+        document.querySelector('.loading-page').style.transform = 'scale(20)'
+        e.preventDefault()
+        setTimeout(() => {
+            history.push(e.target.href.replace(window.location.origin, ''))
+            document.querySelector('.loading-page').style.transform = 'scale(0)'
+        }, 1000)
     }
+
     return(
         <>
             <header id="header">
@@ -38,9 +47,9 @@ export default function Header(){
                             <div className="hamberger">
                             </div>
                             <div className="sub">
-                                <a href="#">Khóa học của tôi</a>
-                                <a href="#">Thông tin tài khoản</a>
-                                <a href="#">Đăng xuất</a>
+                                <Link to="#">Khóa học của tôi</Link>
+                                <Link to="/profile">Thông tin tài khoản</Link>
+                                <Link to="#">Đăng xuất</Link>
                             </div>
                         </div>
                         {/* <div class="not-login bg-none">
