@@ -1,0 +1,23 @@
+.register-course .wrap label{
+    position: relative;
+}
+
+.error-text{
+    bottom: -26px;
+    position: absolute;
+    left: 233px;
+    width: 100% !important;
+    font-size: 14px;
+    color: red;
+    letter-spacing: 1px;
+    font-family: 'main' !important;
+}
+
+.nav ul li.active {
+    background: unset;
+}
+
+.nav ul li a.active{
+    background: #00afab;
+    color: white;
+} 
