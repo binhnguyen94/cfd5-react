@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, useRouteMatch } from 'react-router'
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import HistoryPayment from './components/HistoryPayment'
 import Info from './components/Info'
@@ -10,6 +10,10 @@ import MyProject from './components/MyProject'
 export default function Profile() {
 
     let {url} = useRouteMatch()
+
+    let login = true;
+    if(!login) return <Redirect path="/" />
+
     return (
         <main className="profile" id="main">
             <section>

@@ -9,7 +9,8 @@ export default function Register() {
         website: '',
         coin: true,
         gender: 'male',
-        gender2: ''
+        gender2: '',
+        payment: 'chuyen-khoan'
     })
 
     let [error, setError] = useState({
@@ -70,6 +71,16 @@ export default function Register() {
 
         console.log(form)
     }
+
+    function _selectCustom(value){
+        console.log(value)
+        setForm({
+            ...form,
+            payment: value
+        })
+    }
+
+
 
     return (
         <main className="register-course" id="main">
@@ -141,8 +152,8 @@ export default function Register() {
                                 <div className="select">
                                     <div className="head">Chuyển khoản</div>
                                     <div className="sub">
-                                        <a href="#">Chuyển khoản</a>
-                                        <a href="#">Thanh toán tiền mặt</a>
+                                        <a href="#" onClick={_selectCustom.bind(null, "chuyen-khoan")}>Chuyển khoản</a>
+                                        <a href="#" onClick={_selectCustom.bind(null, "tien-mat")}>Thanh toán tiền mặt</a>
                                     </div>
                                 </div>
                             </label>
