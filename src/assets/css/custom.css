@@ -4,7 +4,6 @@
 
 .error-text{
     bottom: -26px;
-    position: absolute;
     left: 233px;
     width: 100% !important;
     font-size: 14px;
@@ -37,4 +36,12 @@
 .profile .tab .tab-content .tab1 label{
     position: relative;
     margin-bottom: 35px;
+}
+
+label {
+    position: relative;
+}
+
+label .error-text {
+    position: absolute;
 }

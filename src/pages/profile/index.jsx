@@ -1,18 +1,13 @@
 import React from 'react'
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router'
+import { useRouteMatch } from 'react-router'
 import { NavLink } from 'react-router-dom'
-import HistoryPayment from './components/HistoryPayment'
-import Info from './components/Info'
-import MyCoin from './components/MyCoin'
-import MyCourse from './components/MyCourse'
-import MyProject from './components/MyProject'
+import useAuth from '../../core/useAuth'
 
-export default function Profile() {
+export default function Profile({ children }) {
 
     let {url} = useRouteMatch()
 
-    let login = true;
-    if(!login) return <Redirect path="/" />
+    let { user } = useAuth()
 
     return (
         <main className="profile" id="main">
@@ -23,7 +18,7 @@ export default function Profile() {
                         <img src="img/avatar-lg.png" alt="" />
                         <div className="camera" />
                     </div>
-                    <div className="name">trần nghĩa</div>
+                    <div className="name">{user.name}</div>
                     <p className="des">Thành viên của team CFD1-OFFLINE</p>
                 </div>
                 <div className="container">
@@ -36,13 +31,7 @@ export default function Profile() {
                             <NavLink to={`${url}/coin`}>Quản lý COIN của tôi</NavLink>
                         </div>
                         <div className="tab-content">
-                            <Switch>
-                                <Route path={`${url}/course`} component={MyCourse} />
-                                <Route path={`${url}/project`} component={MyProject} />
-                                <Route path={`${url}/history-payment`} component={HistoryPayment} />
-                                <Route path={`${url}/coin`} component={MyCoin} />
-                                <Route exact path={url} component={Info} />
-                            </Switch>
+                            { children }
                         </div>
                     </div>
                 </div>

@@ -5,12 +5,18 @@ import CourseDetail from "./pages/course-detail";
 import Email from "./pages/email";
 import Faq from "./pages/faq";
 import Home from "./pages/home";
-import Course from "./pages/home/components/Course";
 import Payment from "./pages/payment";
 import Profile from "./pages/profile";
 import Project from "./pages/project";
 import Register from "./pages/register";
 import Team from "./pages/team";
+
+import HistoryPayment from './pages/profile/components/HistoryPayment';
+import Info from './pages/profile/components/Info';
+import MyCoin from './pages/profile/components/MyCoin';
+import MyCourse from './pages/profile/components/MyCourse';
+import MyProject from './pages/profile/components/MyProject';
+import Courses from "./pages/courses";
 
 
 const routers = [
@@ -36,7 +42,30 @@ const routers = [
             },
             {
                 path: '/profile',
-                component: Profile
+                component: Profile,
+                auth: true,
+                routers: [
+                    {
+                        path: '/course',
+                        component: MyCourse
+                    },
+                    {
+                        path: '/project',
+                        component: MyProject
+                    },
+                    {
+                        path: '/history-payment',
+                        component: HistoryPayment
+                    },
+                    {
+                        path: '/coin',
+                        component: MyCoin
+                    },
+                    {
+                        path: '/',
+                        component: Info
+                    }
+                ]
             },
             {
                 path: '/project',
@@ -51,8 +80,8 @@ const routers = [
                 component: CourseDetail
             },
             {
-                path: '/course',
-                component: Course
+                path: '/courses',
+                component: Courses
             },
             {
                 path: '/',

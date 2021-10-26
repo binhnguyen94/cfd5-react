@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Course() {
+export default function Courses() {
     return (
         <main className="homepage" id="main">
             <section className="section-1">

@@ -1,53 +1,45 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import useFormValidate from '../../../core/useFormValidate'
 
 export default function Info() {
-    let [form, setForm] = useState({
+
+    let { form, error, inputChange, check } = useFormValidate({
         name: '',
         phone: '',
-        facebook: '',
+        fb: '',
         skype: ''
+    }, {
+        rule: {
+            name: {
+                required: true
+            },
+            phone: {
+                required: true,
+                pattern: 'phone'
+            },
+            fb: {
+                required: true,
+                pattern: 'fb'
+            },
+            skype: {
+                required: true
+            }
+        },
+        message: {
+            name: {
+                required: 'Ho va ten khong duoc de trong'
+            }
+        },
+        option: {
+            localStorage: 'profile-info'
+        }
     })
 
-    let [error, setError] = useState({
-        name: '',
-        phone: '',
-        facebook: '',
-        skype: ''
-    })
-
-    function inputChange(e){
-        let name = e.target.name
-        let value = e.target.value
-
-        setForm({
-            ...form,
-            [name]: value
-        })
-    }
-
-    function submitForm(){
-        let errorObj = {}
-
-        if(form.name === ''){
-            errorObj.name = 'Ho va ten khong duoc de trong'
+    function submitForm() {
+        let error = check()
+        if (Object.keys(error).length === 0) {
+            alert('Thanh Cong') 
         }
-
-        if(form.phone === ''){
-            errorObj.phone = 'Phone khong duoc de trong'
-        } else if(!(form.phone.length >= 9 && form.phone.length <= 11)){
-            errorObj.phone = 'So dien thoai khong it hon 9 va nhieu hon 11'
-        } 
-
-        if(form.facebook && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i.test(form.facebook)){
-            errorObj.facebook = 'dinh dang URL sai'
-        }
-
-        if(form.skype && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i.test(form.skype)){
-            errorObj.skype = 'dinh dang URL sai'
-        }
-
-        setError(errorObj)
-        
     }
 
     return (
@@ -69,8 +61,8 @@ export default function Info() {
                 </label>
                 <label>
                     <p>Facebook<span>*</span></p>
-                    <input value={form.facebook} onChange={inputChange} name="facebook" type="text" placeholder="Facebook url" />
-                    {error.facebook && <p className="error-text">{error.facebook}</p>}
+                    <input value={form.facebook} onChange={inputChange} name="fb" type="text" placeholder="Facebook url" />
+                    {error.fb && <p className="error-text">{error.fb}</p>}
                 </label>
                 <label>
                     <p>Skype<span>*</span></p>

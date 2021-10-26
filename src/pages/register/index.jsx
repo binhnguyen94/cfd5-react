@@ -1,8 +1,29 @@
 import React, { useState } from 'react'
+import useFormValidate from '../../core/useFormValidate'
+let $ = window.$
 
 export default function Register() {
 
-    let [form, setForm] = useState({
+    // let [form, setForm] = useState({
+    //     name: '',
+    //     phone: '',
+    //     email: '',
+    //     website: '',
+    //     coin: true,
+    //     gender: 'male',
+    //     gender2: '',
+    //     payment: 'chuyen-khoan'
+    // })
+
+    // let [error, setError] = useState({
+    //     name: '',
+    //     phone: '',
+    //     email: '',
+    //     website: '',
+    //     coin: true,
+    //     gender: 'male'
+    // })
+    let { form, error, inputChange, check } = useFormValidate({
         name: '',
         phone: '',
         email: '',
@@ -11,75 +32,70 @@ export default function Register() {
         gender: 'male',
         gender2: '',
         payment: 'chuyen-khoan'
+    }, {
+        rule: {
+            name: {
+                required: true
+            },
+            phone: {
+                required: true,
+                pattern: 'phone'
+            },
+            email: {
+                required: true,
+                pattern: 'email'
+            },
+            website: {
+                required: true,
+                pattern: 'website'
+            }
+        },
+        message: {
+            name: {
+                required: 'Ho va ten khong duoc de trong'
+            }
+        }
     })
 
-    let [error, setError] = useState({
-        name: '',
-        phone: '',
-        email: '',
-        website: '',
-        coin: true,
-        gender: 'male'
-    })
+    function btnRegister() {
 
-    function inputChange(e){
-        let name = e.target.name
-        let value = e.target.value,
-            type = e.target.type
-
-        if(type === 'checkbox'){
-            value = e.target.checked
-        }
-        setForm({
-            ...form,
-            [name]: value
-        })
-    }
-    
-    
-    function btnRegister(){
-
-        let errorObj = {}
-        if(form.name === ''){
-            errorObj.name = 'Ho va ten khong duoc de trong'
-        }
-
-        if(form.phone === ''){
-            errorObj.phone = 'So dien thoai khong duoc de trong'
-        }
-
-        if(form.email === ''){
-            errorObj.email = 'Email khong duoc de trong'
-        } else if(!/^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/i.test(form.email)){
-            errorObj.email = 'Email khong dung format'
-        }
-
-        if(form.website && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/i.test(form.website)){
-            errorObj.website = 'Website khong dung dinh dang URL'
-        }
-
-        setError(errorObj)
-        // if(name === ""){ 
-        //     setNameError("Name ko dc de trong")
-        // } else {
-        //     setNameError('')
-        // }
-
-        if(Object.keys(errorObj).length === 0){
-            alert('Thanh Cong')
+        let error = check()
+        if (Object.keys(error).length === 0) {
+            alert('Thanh Cong') 
         }
 
         console.log(form)
     }
 
-    function _selectCustom(value){
-        console.log(value)
-        setForm({
-            ...form,
-            payment: value
-        })
+    function _selectCustom(value) {
+        // console.log(value)
+        // setForm({
+        //     ...form,
+        //     payment: value
+        // })
     }
 
+    function open(){
+        // document.querySelector('.select .head .sub').style.display = "block"
+        $('.select .head').on('click', function (e) {
+            // e.stopPropagation();
+            let $select = $(this).closest('.select');
+            $select.find('.sub').fadeToggle(0, function () {
+                if ($select.hasClass('active')) {
+                    $select.removeClass('active');
+                } else {
+                    $select.addClass('active')
+                }
+            });
+        })
+    
+        $('.select .sub a').on('click', function (e) {
+            e.preventDefault();
+            let value = $(this).text();
+            $(this).closest('.select').find('.head').text(value);
+            $(this).closest('.select').find('.sub').fadeOut(200);
+        });
+    }
 
 
     return (
@@ -121,27 +137,27 @@ export default function Register() {
                                     Hiện có <strong>300 COIN</strong>
                                     {/* Giảm giá còn <span><strong>5.800.000 VND</strong>, còn lại 100 COIN</span> */}
                                     {/* Cần ít nhất 200 COIN để giảm giá */}
-                                    <input type="checkbox" name="coin" checked={form.coin} onChange={inputChange}/>
+                                    <input type="checkbox" name="coin" checked={form.coin} onChange={inputChange} />
                                     <span className="checkmark" />
                                 </div>
                             </label>
                             <label className="disable">
                                 <p>Gioi tinh</p>
                                 <div className="checkcontainer">
-                                    <input type="radio" name="gender" value="male" checked={form.gender === 'male'} onChange={inputChange}/> Male  
+                                    <input type="radio" name="gender" value="male" checked={form.gender === 'male'} onChange={inputChange} /> Male
                                     <span className="checkmark" />
                                 </div>
                             </label>
                             <label className="disable">
                                 {/* <p>Gioi tinh</p> */}
                                 <div className="checkcontainer">
-                                    <input type="radio" name="gender" value="female" checked={form.gender === 'female'} onChange={inputChange}/> Female
+                                    <input type="radio" name="gender" value="female" checked={form.gender === 'female'} onChange={inputChange} /> Female
                                     <span className="checkmark" />
                                 </div>
                             </label>
                             <label className="disable">
                                 <p>Gioi tinh</p>
-                                <select name="gender2"  onChange={inputChange}>
+                                <select name="gender2" onChange={inputChange}>
                                     <option value="">---Gender---</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -149,9 +165,9 @@ export default function Register() {
                             </label>
                             <label>
                                 <p>Hình thức thanh toán</p>
-                                <div className="select">
+                                <div className="select" onClick={open}>
                                     <div className="head">Chuyển khoản</div>
-                                    <div className="sub">
+                                    <div className="sub" >
                                         <a href="#" onClick={_selectCustom.bind(null, "chuyen-khoan")}>Chuyển khoản</a>
                                         <a href="#" onClick={_selectCustom.bind(null, "tien-mat")}>Thanh toán tiền mặt</a>
                                     </div>

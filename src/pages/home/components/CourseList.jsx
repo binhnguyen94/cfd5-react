@@ -1,7 +1,7 @@
 import React from 'react'
 import Course from './Course'
 
-export default function CourseList() {
+export default function CourseList({ offline, online }) {
     return (
         <>
             <section className="section-courseoffline">
@@ -15,12 +15,9 @@ export default function CourseList() {
                         <h2 className="main-title">Khóa học Offline</h2>
                     </div>
                     <div className="list row">
-                        <Course name="ReactJS" des="" status="" image="" teacher_name="" teacher_img="" />
-                        <Course name="NodeJS" des="" status="" image="" teacher_name="" teacher_img="" />
-                        <Course name="PHP" des="" status="" image="" teacher_name="" teacher_img="" />
-                        <Course name="Java" des="" status="" image="" teacher_name="" teacher_img="" />
-                        <Course name="C#" des="" status="" image="" teacher_name="" teacher_img="" />
-                        <Course name="C++" des="" status="" image="" teacher_name="" teacher_img="" />
+                        {
+                            offline.map((e,i) => <Course key={i} {...e} />)
+                        }
                     </div>
                 </div>
             </section>
@@ -30,9 +27,9 @@ export default function CourseList() {
                         <h2 className="main-title">Khóa học Online</h2>
                     </div>
                     <div className="list row">
-                        <Course name="ReactJS" des="" status="" image="" teacher_name="" teacher_img="" />
-                        <Course name="NodeJS" des="" status="" image="" teacher_name="" teacher_img="" />
-                        <Course name="PHP" des="" status="" image="" teacher_name="" teacher_img="" />
+                        {
+                            online.map((e, i) => <Course key={i} {...e} />)
+                        }
                     </div>
                     <div className="text-deco">C</div>
                 </div>
